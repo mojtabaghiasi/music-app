@@ -20,7 +20,7 @@ export class AuthController {
   }
 
   @Post('login')
-  login(@Body() loginDto: LoginDto): Promise<Omit<User, 'password'>> {
+  login(@Body() loginDto: LoginDto): Promise<{ accessToken: string }> {
     return this.authService.login(loginDto);
   }
 }

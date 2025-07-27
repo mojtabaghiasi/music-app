@@ -6,7 +6,7 @@ import { LoggerMiddleware } from './common/middleware/logger.middleware';
 import { SongsController } from './songs/songs.controller';
 import { devConfig, proConfig } from './common/constants/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { typeOrmAsyncConfig } from './common/constants/typeorm.config';
 import { DataSource } from 'typeorm';
 import { PlaylistsModule } from './playlists/playlists.module';
@@ -30,8 +30,11 @@ import { AuthModule } from './auth/auth.module';
     AppService,
     {
       provide: 'CONFIG',
-      useFactory: () => {
-        return process.env.NODE_ENV === 'development' ? devConfig : proConfig;
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => {
+        return configService.get<string>('NODE_ENV') === 'development'
+          ? devConfig
+          : proConfig;
       },
     },
   ],
@@ -40,6 +43,7 @@ export class AppModule implements NestModule {
   constructor(private dataSource: DataSource) {
     console.log(dataSource.driver.database);
   }
+
   configure(consumer: MiddlewareConsumer) {
     // consumer.apply(LoggerMiddleware).forRoutes('songs'); // option no 1
     // consumer

@@ -3,12 +3,17 @@ import { UsersService } from '../users/users.service';
 import { LoginDto } from './dto/login.dto';
 import { User } from '../users/entities/user';
 import * as bcrypt from 'bcryptjs';
+import { JwtService } from '@nestjs/jwt';
+import { JwtPayloadType } from './jwt.payload.type';
 
 @Injectable()
 export class AuthService {
-  constructor(private userService: UsersService) {}
+  constructor(
+    private userService: UsersService,
+    private jwtService: JwtService,
+  ) {}
 
-  async login(loginDto: LoginDto): Promise<Omit<User, 'password'>> {
+  async login(loginDto: LoginDto): Promise<{ accessToken: string }> {
     const user = await this.userService.findOne(loginDto);
     const passwordMatch = await bcrypt.compare(
       loginDto.password,
@@ -19,6 +24,9 @@ export class AuthService {
     }
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password, ...safeUser } = user;
-    return safeUser;
+    const payload: JwtPayloadType = { email: safeUser.email, sub: safeUser.id };
+    return {
+      accessToken: this.jwtService.sign(payload),
+    };
   }
 }
