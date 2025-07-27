@@ -12,6 +12,7 @@ import { DataSource } from 'typeorm';
 import { PlaylistsModule } from './playlists/playlists.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
+import { ArtistsModule } from './artists/artists.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { AuthModule } from './auth/auth.module';
     PlaylistsModule,
     UsersModule,
     AuthModule,
+    ArtistsModule,
   ],
   controllers: [AppController],
   providers: [
