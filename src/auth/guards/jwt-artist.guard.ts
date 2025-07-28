@@ -1,6 +1,6 @@
 import { AuthGuard } from '@nestjs/passport';
 import { ExecutionContext, UnauthorizedException } from '@nestjs/common';
-import { JwtPayloadType } from './types/jwt.payload.type';
+import { JwtPayloadType } from '../types/jwt.payload.type';
 
 export class JwtArtistGuard extends AuthGuard('jwt') {
   canActivate(context: ExecutionContext) {

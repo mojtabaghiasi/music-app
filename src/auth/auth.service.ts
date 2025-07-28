@@ -1,11 +1,12 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { LoginDto } from './dto/login.dto';
-import { User } from '../users/entities/user';
+import * as speakeasy from 'speakeasy';
 import * as bcrypt from 'bcryptjs';
 import { JwtService } from '@nestjs/jwt';
 import { JwtPayloadType } from './types/jwt.payload.type';
 import { ArtistsService } from '../artists/artists.service';
+import { Enable2FAType } from './types/enable-2FA.type';
 
 @Injectable()
 export class AuthService {
@@ -38,5 +39,19 @@ export class AuthService {
     return {
       accessToken: this.jwtService.sign(payload),
     };
+  }
+
+  async enable2FA(userId: number): Promise<Enable2FAType> {
+    const user = await this.userService.findOne({ id: userId });
+    if (user.enable2FA) {
+      return {
+        secret: user.twoFASecret,
+      };
+    }
+    const secret = speakeasy.generateSecret();
+    console.log(secret);
+    user.twoFASecret = secret.base32;
+    await this.userService.updateSecretKey(user.id, user.twoFASecret);
+    return { secret: user.twoFASecret };
   }
 }

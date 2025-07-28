@@ -17,7 +17,7 @@ import { Song } from './entities/entity';
 import { UpdateResult } from 'typeorm';
 import { UpdateSongDto } from './dto/update-song-dto';
 import { Pagination } from 'nestjs-typeorm-paginate';
-import { JwtArtistGuard } from '../auth/jwt-artist.guard';
+import { JwtArtistGuard } from '../auth/guards/jwt-artist.guard';
 
 @Controller('songs')
 export class SongsController {

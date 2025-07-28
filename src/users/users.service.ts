@@ -25,4 +25,15 @@ export class UsersService {
     }
     return user;
   }
+
+  async findById(id: number): Promise<User | null> {
+    return await this.userRepo.findOneBy({ id: id });
+  }
+
+  async updateSecretKey(userId: number, secretKey: string) {
+    return await this.userRepo.update(userId, {
+      twoFASecret: secretKey,
+      enable2FA: true,
+    });
+  }
 }

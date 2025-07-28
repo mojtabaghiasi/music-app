@@ -17,4 +17,8 @@ export class User {
   password: string;
   @OneToMany(() => Playlist, (playlist) => playlist.user)
   playLists: Playlist[];
+  @Column({ nullable: true, type: 'text' })
+  twoFASecret: string;
+  @Column({ nullable: true, type: 'boolean' })
+  enable2FA: boolean;
 }
