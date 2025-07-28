@@ -18,6 +18,7 @@ import { UpdateResult } from 'typeorm';
 import { UpdateSongDto } from './dto/update-song-dto';
 import { Pagination } from 'nestjs-typeorm-paginate';
 import { JwtArtistGuard } from '../auth/guards/jwt-artist.guard';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('songs')
 export class SongsController {
@@ -30,6 +31,7 @@ export class SongsController {
   }
 
   @Get()
+  @UseGuards(AuthGuard('bearer'))
   findAll(
     @Query('page', ParseIntPipe) page: number = 1,
     @Query('limit', ParseIntPipe) limit: number = 10,

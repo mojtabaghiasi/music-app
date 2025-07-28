@@ -21,4 +21,6 @@ export class User {
   twoFASecret: string;
   @Column({ nullable: true, type: 'boolean' })
   enable2FA: boolean;
+  @Column()
+  apiKey: string;
 }

@@ -6,6 +6,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JWTStrategy } from './jwt.strategy';
 import { PassportModule } from '@nestjs/passport';
+import { ApiKeyStrategy } from './api-key-strategy';
 
 @Module({
   imports: [
@@ -22,7 +23,7 @@ import { PassportModule } from '@nestjs/passport';
       }),
     }),
   ],
-  providers: [AuthService, JWTStrategy],
+  providers: [AuthService, JWTStrategy, ApiKeyStrategy],
   controllers: [AuthController],
   exports: [AuthService],
 })

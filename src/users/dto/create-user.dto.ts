@@ -25,4 +25,7 @@ export class CreateUserDto {
   @IsBoolean()
   @IsOptional()
   enable2FA: boolean;
+  @IsString()
+  @IsOptional()
+  apiKey?: string;
 }
