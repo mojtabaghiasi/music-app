@@ -1,15 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ArtistEntity } from './entities/artist.entity';
+import { Artist } from './entities/artist';
 import { Repository } from 'typeorm';
 
 @Injectable()
 export class ArtistsService {
   constructor(
-    @InjectRepository(ArtistEntity) private artistRepo: Repository<ArtistEntity>,
+    @InjectRepository(Artist) private artistRepo: Repository<Artist>,
   ) {}
 
-  async findArtist(userId: number): Promise<ArtistEntity | null> {
+  async findArtist(userId: number): Promise<Artist | null> {
     return await this.artistRepo.findOneBy({ user: { id: userId } });
   }
 }

@@ -9,7 +9,7 @@ import { User } from '../../users/entities/user.entity';
 import { Song } from '../../songs/entities/song.entity';
 
 @Entity('artists')
-export class ArtistEntity {
+export class Artist {
   @PrimaryGeneratedColumn()
   id: number;
   @OneToOne(() => User)

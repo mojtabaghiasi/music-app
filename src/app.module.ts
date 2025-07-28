@@ -13,6 +13,7 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { ArtistsModule } from './artists/artists.module';
 import { dataSourceOptions } from '../db/data-source';
+import { SeedModule } from './seed/seed.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { dataSourceOptions } from '../db/data-source';
     UsersModule,
     AuthModule,
     ArtistsModule,
+    SeedModule,
   ],
   controllers: [AppController],
   providers: [

@@ -11,14 +11,14 @@ import {
   paginate,
   Pagination,
 } from 'nestjs-typeorm-paginate';
-import { ArtistEntity } from '../artists/entities/artist.entity';
+import { Artist } from '../artists/entities/artist';
 
 @Injectable()
 export class SongsService {
   constructor(
     @Inject('CONNECTION') connection: Connection,
     @InjectRepository(Song) private songRepository: Repository<Song>,
-    @InjectRepository(ArtistEntity) private artistRepository: Repository<ArtistEntity>,
+    @InjectRepository(Artist) private artistRepository: Repository<Artist>,
   ) {
     log('connection string', connection.CONNECTION_STRING);
   }

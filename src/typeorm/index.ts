@@ -1,6 +1,6 @@
 import { Song } from 'src/songs/entities/song.entity';
 import { User } from '../users/entities/user.entity';
-import { ArtistEntity } from '../artists/entities/artist.entity';
-import { PlaylistEntity } from '../playlists/entities/playlist.entity';
+import { Artist } from '../artists/entities/artist';
+import { Playlist } from '../playlists/entities/playlist';
 
-export const entities = [Song, User, ArtistEntity, PlaylistEntity];
+export const entities = [Song, User, Artist, Playlist];
