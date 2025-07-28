@@ -17,7 +17,11 @@ export class AuthService {
     private artistService: ArtistsService,
   ) {}
 
-  async login(loginDto: LoginDto): Promise<{ accessToken: string }> {
+  async login(
+    loginDto: LoginDto,
+  ): Promise<
+    { accessToken: string } | { validate2FA: string; message: string }
+  > {
     const user = await this.userService.findOne(loginDto);
     const passwordMatch = await bcrypt.compare(
       loginDto.password,
@@ -33,6 +37,13 @@ export class AuthService {
       email: safeUser.email,
       userId: safeUser.id,
     };
+
+    if (user.enable2FA && user.twoFASecret) {
+      return {
+        validate2FA: 'http://localhost:3000/auth/validate2FA',
+        message: 'Please validate your 2FA',
+      };
+    }
     const artistId = await this.artistService.findArtist(safeUser.id);
     if (artistId) {
       payload.artistId = artistId.id;
@@ -61,5 +72,23 @@ export class AuthService {
       twoFASecret: undefined,
       enable2FA: true,
     });
+  }
+
+  async validate2FA(
+    userId: number,
+    token: string,
+  ): Promise<{ verified: boolean }> {
+    try {
+      const user = await this.userService.findOne({ id: userId });
+      const verified = speakeasy.totp.verify({
+        secret: user.twoFASecret,
+        encoding: 'base32',
+        token,
+      });
+      return { verified };
+    } catch (e) {
+      console.log(e);
+      throw new UnauthorizedException('Error verifying token');
+    }
   }
 }
