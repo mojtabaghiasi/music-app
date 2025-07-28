@@ -1,9 +1,9 @@
 import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { Song } from '../../songs/entities/entity';
-import { User } from '../../users/entities/user';
+import { Song } from '../../songs/entities/song.entity';
+import { User } from '../../users/entities/user.entity';
 
 @Entity('playlist')
-export class Playlist {
+export class PlaylistEntity {
   @PrimaryGeneratedColumn()
   id: number;
 

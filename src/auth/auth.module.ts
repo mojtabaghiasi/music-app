@@ -7,11 +7,13 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JWTStrategy } from './jwt.strategy';
 import { PassportModule } from '@nestjs/passport';
 import { ApiKeyStrategy } from './api-key-strategy';
+import { ArtistsModule } from '../artists/artists.module';
 
 @Module({
   imports: [
     UsersModule,
     PassportModule,
+    ArtistsModule,
     JwtModule.registerAsync({
       imports: [ConfigModule], // required for ConfigService
       inject: [ConfigService],

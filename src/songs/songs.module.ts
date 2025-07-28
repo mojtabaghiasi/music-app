@@ -3,11 +3,11 @@ import { SongsController } from './songs.controller';
 import { SongsService } from './songs.service';
 import { connection } from 'src/common/constants/connection';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Song } from './entities/entity';
-import { Artist } from '../artists/entities/artist';
+import { Song } from './entities/song.entity';
+import { ArtistEntity } from '../artists/entities/artist.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Song, Artist])],
+  imports: [TypeOrmModule.forFeature([Song, ArtistEntity])],
   controllers: [SongsController],
   providers: [
     SongsService,

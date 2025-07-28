@@ -7,12 +7,12 @@ import { SongsController } from './songs/songs.controller';
 import { devConfig, proConfig } from './common/constants/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { typeOrmAsyncConfig } from './common/constants/typeorm.config';
 import { DataSource } from 'typeorm';
 import { PlaylistsModule } from './playlists/playlists.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { ArtistsModule } from './artists/artists.module';
+import { dataSourceOptions } from '../db/data-source';
 
 @Module({
   imports: [
@@ -21,7 +21,7 @@ import { ArtistsModule } from './artists/artists.module';
       envFilePath: `.env`,
     }),
     SongsModule,
-    TypeOrmModule.forRootAsync(typeOrmAsyncConfig),
+    TypeOrmModule.forRoot(dataSourceOptions),
     PlaylistsModule,
     UsersModule,
     AuthModule,

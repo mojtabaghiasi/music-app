@@ -3,7 +3,7 @@ import { Strategy } from 'passport';
 import { AuthService } from './auth.service';
 import { UnauthorizedException } from '@nestjs/common';
 
-export class ApiKeyStrategy extends PassportStrategy(Strategy) {
+export class ApiKeyStrategy extends PassportStrategy(Strategy, 'api-key') {
   constructor(private authService: AuthService) {
     super();
   }

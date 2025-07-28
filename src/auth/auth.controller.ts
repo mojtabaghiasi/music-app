@@ -1,7 +1,7 @@
 import { Body, Controller, Post, Request, UseGuards } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { CreateUserDto } from '../users/dto/create-user.dto';
-import { User } from '../users/entities/user';
+import { User } from '../users/entities/user.entity';
 import { LoginDto } from './dto/login.dto';
 import { AuthService } from './auth.service';
 import { Enable2FAType } from './types/enable-2FA.type';

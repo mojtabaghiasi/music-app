@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { log } from 'console';
 import { Connection } from 'src/common/constants/connection';
-import { Song } from './entities/entity';
+import { Song } from './entities/song.entity';
 import { In, Repository, UpdateResult } from 'typeorm';
 import { CreateSongDto } from './dto/create-song.dto';
 import { UpdateSongDto } from './dto/update-song-dto';
@@ -11,14 +11,14 @@ import {
   paginate,
   Pagination,
 } from 'nestjs-typeorm-paginate';
-import { Artist } from '../artists/entities/artist';
+import { ArtistEntity } from '../artists/entities/artist.entity';
 
 @Injectable()
 export class SongsService {
   constructor(
     @Inject('CONNECTION') connection: Connection,
     @InjectRepository(Song) private songRepository: Repository<Song>,
-    @InjectRepository(Artist) private artistRepository: Repository<Artist>,
+    @InjectRepository(ArtistEntity) private artistRepository: Repository<ArtistEntity>,
   ) {
     log('connection string', connection.CONNECTION_STRING);
   }
