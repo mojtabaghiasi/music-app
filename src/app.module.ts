@@ -12,17 +12,21 @@ import { PlaylistsModule } from './playlists/playlists.module';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { ArtistsModule } from './artists/artists.module';
-import { dataSourceOptions } from '../db/data-source';
+import { typeOrmAsyncConfig } from '../db/data-source';
 import { SeedModule } from './seed/seed.module';
+import configuration from './config/configuration';
+import { validate } from '../env.validation';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
+      validate: validate,
       isGlobal: true,
-      envFilePath: `.env`,
+      envFilePath: ['.development.env', '.production.env'],
+      load: [configuration],
     }),
     SongsModule,
-    TypeOrmModule.forRoot(dataSourceOptions),
+    TypeOrmModule.forRootAsync(typeOrmAsyncConfig),
     PlaylistsModule,
     UsersModule,
     AuthModule,

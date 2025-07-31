@@ -15,12 +15,12 @@ import { ArtistsModule } from '../artists/artists.module';
     PassportModule,
     ArtistsModule,
     JwtModule.registerAsync({
-      imports: [ConfigModule], // required for ConfigService
+      imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
-        secret: configService.get<string>('JWT_SECRET'),
+        secret: configService.get<string>('jwtSecret'),
         signOptions: {
-          expiresIn: configService.get<string>('JWT_EXPIRES_IN') || '1h',
+          expiresIn: configService.get<string>('jwtExpiresIn') || '1h',
         },
       }),
     }),
