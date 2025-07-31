@@ -3,8 +3,8 @@ import { faker } from '@faker-js/faker';
 import { v4 as uuid4 } from 'uuid';
 import * as bcrypt from 'bcryptjs';
 import { User } from '../../src/users/entities/user.entity';
-import { Artist } from '../../src/artists/entities/artist';
-import { Playlist } from '../../src/playlists/entities/playlist';
+import { ArtistEntity } from '../../src/artists/entities/artist.entity';
+import { PlaylistEntity } from '../../src/playlists/entities/playlist.entity';
 
 export const seedData = async (manager: EntityManager): Promise<void> => {
   //1
@@ -41,10 +41,10 @@ export const seedData = async (manager: EntityManager): Promise<void> => {
     user.password = encryptedPassword;
     user.apiKey = uuid4();
 
-    const artist = new Artist();
+    const artist = new ArtistEntity();
     artist.user = user;
     await manager.getRepository(User).save(user);
-    await manager.getRepository(Artist).save(artist);
+    await manager.getRepository(ArtistEntity).save(artist);
   }
 
   async function seedPlayLists() {
@@ -58,11 +58,11 @@ export const seedData = async (manager: EntityManager): Promise<void> => {
     user.password = encryptedPassword;
     user.apiKey = uuid4();
 
-    const playList = new Playlist();
+    const playList = new PlaylistEntity();
     playList.name = faker.music.genre();
     playList.user = user;
 
     await manager.getRepository(User).save(user);
-    await manager.getRepository(Playlist).save(playList);
+    await manager.getRepository(PlaylistEntity).save(playList);
   }
 };

@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { log } from 'console';
 import { Connection } from 'src/common/constants/connection';
-import { Song } from './entities/song.entity';
+import { SongEntity } from './entities/song.entity';
 import { In, Repository, UpdateResult } from 'typeorm';
 import { CreateSongDto } from './dto/create-song.dto';
 import { UpdateSongDto } from './dto/update-song-dto';
@@ -11,22 +11,22 @@ import {
   paginate,
   Pagination,
 } from 'nestjs-typeorm-paginate';
-import { Artist } from '../artists/entities/artist';
+import { ArtistEntity } from '../artists/entities/artist.entity';
 
 @Injectable()
 export class SongsService {
   constructor(
     @Inject('CONNECTION') connection: Connection,
-    @InjectRepository(Song) private songRepository: Repository<Song>,
-    @InjectRepository(Artist) private artistRepository: Repository<Artist>,
+    @InjectRepository(SongEntity) private songRepository: Repository<SongEntity>,
+    @InjectRepository(ArtistEntity) private artistRepository: Repository<ArtistEntity>,
   ) {
     log('connection string', connection.CONNECTION_STRING);
   }
 
   private readonly songs: any = [];
 
-  async create(songDto: CreateSongDto): Promise<Song> {
-    const song = new Song();
+  async create(songDto: CreateSongDto): Promise<SongEntity> {
+    const song = new SongEntity();
     song.title = songDto.title;
     song.artists = songDto.artists;
     song.duration = songDto.duration;
@@ -39,11 +39,11 @@ export class SongsService {
     return await this.songRepository.save(song);
   }
 
-  async findAll(): Promise<Song[]> {
+  async findAll(): Promise<SongEntity[]> {
     return await this.songRepository.find();
   }
 
-  async findOne(id: number): Promise<Song | null> {
+  async findOne(id: number): Promise<SongEntity | null> {
     return await this.songRepository.findOneBy({ id });
   }
 
@@ -58,9 +58,9 @@ export class SongsService {
     return await this.songRepository.update(id, recordToUpdate);
   }
 
-  async paginateSongs(options: IPaginationOptions): Promise<Pagination<Song>> {
+  async paginateSongs(options: IPaginationOptions): Promise<Pagination<SongEntity>> {
     const queryBuilder = this.songRepository.createQueryBuilder('c');
     queryBuilder.orderBy('c.releasedDate', 'DESC');
-    return paginate<Song>(queryBuilder, options);
+    return paginate<SongEntity>(queryBuilder, options);
   }
 }

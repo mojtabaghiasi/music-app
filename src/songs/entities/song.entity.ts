@@ -1,24 +1,24 @@
 import { Column, JoinTable, ManyToMany, ManyToOne } from 'typeorm';
 
 import { Entity, PrimaryGeneratedColumn } from 'typeorm';
-import { Artist } from '../../artists/entities/artist';
-import { Playlist } from '../../playlists/entities/playlist';
+import { ArtistEntity } from '../../artists/entities/artist.entity';
+import { PlaylistEntity } from '../../playlists/entities/playlist.entity';
 
 @Entity('songs')
-export class Song {
+export class SongEntity {
   @PrimaryGeneratedColumn()
   id: number;
   @Column()
   title: string;
-  @ManyToMany(() => Artist, (artist) => artist.songs, { cascade: true })
+  @ManyToMany(() => ArtistEntity, (artist) => artist.songs, { cascade: true })
   @JoinTable({ name: 'songs_artists' })
-  artists: Artist[];
+  artists: ArtistEntity[];
   @Column({ type: 'date' })
   releasedDate: Date;
   @Column({ type: 'time' })
   duration: Date;
   @Column({ type: 'text' })
   lyrics: string;
-  @ManyToOne(() => Playlist, (playlist) => playlist.songs)
-  playList: Playlist;
+  @ManyToOne(() => PlaylistEntity, (playlist) => playlist.songs)
+  playList: PlaylistEntity;
 }

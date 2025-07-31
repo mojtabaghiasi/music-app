@@ -6,15 +6,15 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { User } from '../../users/entities/user.entity';
-import { Song } from '../../songs/entities/song.entity';
+import { SongEntity } from '../../songs/entities/song.entity';
 
 @Entity('artists')
-export class Artist {
+export class ArtistEntity {
   @PrimaryGeneratedColumn()
   id: number;
   @OneToOne(() => User)
   @JoinColumn()
   user: User;
-  @ManyToMany(() => Song, (song) => song.artists)
-  songs: Song[];
+  @ManyToMany(() => SongEntity, (song) => song.artists)
+  songs: SongEntity[];
 }
