@@ -1,15 +1,15 @@
 import {
-    Body,
-    Controller,
-    Delete,
-    Get,
-    HttpException,
-    HttpStatus,
-    Param,
-    ParseIntPipe,
-    Post,
-    Put,
-    Query, UseGuards,
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpStatus,
+  Param,
+  ParseIntPipe,
+  Post,
+  Put,
+  Query,
+  UseGuards,
 } from '@nestjs/common';
 import { SongsService } from './songs.service';
 import { CreateSongDto } from './dto/create-song.dto';
@@ -19,13 +19,16 @@ import { UpdateSongDto } from './dto/update-song-dto';
 import { Pagination } from 'nestjs-typeorm-paginate';
 import { JwtArtistGuard } from '../auth/guards/jwt-artist.guard';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Songs')
 @Controller('songs')
 export class SongsController {
   constructor(private songsService: SongsService) {}
 
   @Post()
   @UseGuards(JwtArtistGuard)
+  @ApiBearerAuth('JWT-auth')
   create(@Body() createSongDto: CreateSongDto): Promise<SongEntity> {
     return this.songsService.create(createSongDto);
   }

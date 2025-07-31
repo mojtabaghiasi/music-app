@@ -7,7 +7,7 @@ import { JwtPayloadType } from './types/jwt.payload.type';
 @Injectable()
 export class JWTStrategy extends PassportStrategy(JwtStrategy) {
   constructor(private configService: ConfigService) {
-    const secret = configService.get<string>('JWT_SECRET');
+    const secret = configService.get<string>('jwtSecret');
     if (!secret) {
       throw new Error('JWT_SECRET is not defined in the configuration');
     }
@@ -15,7 +15,7 @@ export class JWTStrategy extends PassportStrategy(JwtStrategy) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
-      secretOrKey: secret,
+      secretOrKey: process.env.jwtSecret || secret,
     });
   }
 

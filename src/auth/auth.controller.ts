@@ -9,7 +9,9 @@ import { JwtAuthGuard } from './guards/jwt.guard';
 import { JwtPayloadType } from './types/jwt.payload.type';
 import { UpdateResult } from 'typeorm';
 import { ValidateTokenDto } from './dto/validate-token.dto';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
   constructor(
@@ -17,6 +19,11 @@ export class AuthController {
     private authService: AuthService,
   ) {}
 
+  @ApiOperation({ summary: 'Register new user' })
+  @ApiResponse({
+    status: 201,
+    description: 'It will return the user in the response',
+  })
   @Post('signup')
   signup(
     @Body() createUserDto: CreateUserDto,
@@ -24,6 +31,11 @@ export class AuthController {
     return this.userService.create(createUserDto);
   }
 
+  @ApiOperation({ summary: 'Login user' })
+  @ApiResponse({
+    status: 200,
+    description: 'It will give you the access_token in the response',
+  })
   @Post('login')
   login(
     @Body() loginDto: LoginDto,
