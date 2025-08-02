@@ -12,7 +12,7 @@ class EnvironmentVariables {
   @IsEnum(Environment)
   NODE_ENV: Environment;
   @IsNumber()
-  PORT: number;
+  DB_PORT: number;
   @IsString()
   DB_HOST: string;
   @IsString()

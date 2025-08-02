@@ -5,12 +5,6 @@ import { SeedService } from './seed/seed.service';
 import { ConfigService } from '@nestjs/config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
-import * as crypto from 'crypto';
-
-if (!(global as any).crypto) {
-  (global as any).crypto = crypto;
-}
-
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
@@ -38,6 +32,8 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, document);
 
   await app.listen(configService.get<number>('port') ?? 3000);
+
+  console.log(configService.get<string>('NODE_ENV'));
 }
 
 bootstrap();
