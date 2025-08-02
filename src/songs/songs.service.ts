@@ -17,8 +17,10 @@ import { ArtistEntity } from '../artists/entities/artist.entity';
 export class SongsService {
   constructor(
     @Inject('CONNECTION') connection: Connection,
-    @InjectRepository(SongEntity) private songRepository: Repository<SongEntity>,
-    @InjectRepository(ArtistEntity) private artistRepository: Repository<ArtistEntity>,
+    @InjectRepository(SongEntity)
+    private songRepository: Repository<SongEntity>,
+    @InjectRepository(ArtistEntity)
+    private artistRepository: Repository<ArtistEntity>,
   ) {
     log('connection string', connection.CONNECTION_STRING);
   }
@@ -58,7 +60,9 @@ export class SongsService {
     return await this.songRepository.update(id, recordToUpdate);
   }
 
-  async paginateSongs(options: IPaginationOptions): Promise<Pagination<SongEntity>> {
+  async paginateSongs(
+    options: IPaginationOptions,
+  ): Promise<Pagination<SongEntity>> {
     const queryBuilder = this.songRepository.createQueryBuilder('c');
     queryBuilder.orderBy('c.releasedDate', 'DESC');
     return paginate<SongEntity>(queryBuilder, options);
